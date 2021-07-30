@@ -89,14 +89,14 @@ class GameScreen {
     const value = this.optionValue;
     const selectable = this.selectable;
     const limit = this.limit ?? options.length;
-    let padding = 20;
+    let padding = 15;
     
-    context.font = "10px default-font";
+    context.font = "8px default-font";
     for(let index = 0; index < limit; index++) {
       const text = options[index] ?? "";
       context.fillStyle = (selectable && text === value) ? this.selectedColor : this.letterColor;
       context.fillText(text,this.x + 10,this.y + padding);
-      padding += 20;
+      padding += 15;
     }
   }
   
@@ -119,13 +119,47 @@ class Camera {
     this.y = y;
     this.width = width;
     this.height = height;
+    this.target = null;
   }
   
   inside(sprite) {
-    if((sprite.x >= this.x && (sprite.x + sprite.width) <= (this.x + this.width)) && 
-      (sprite.y >= this.y && (sprite.y + sprite.height) <= (this.y + this.height))) {
+    if(((sprite.x + sprite.width) >= this.x && sprite.x <= (this.x + this.width)) && 
+      ((sprite.y + sprite.height) >= this.y && sprite.y <= (this.y + this.height))) {
       return true;
     }
     return false;
+  }
+  
+  edge(direction) {
+    switch(direction) {
+      case "top":
+        return this.y + (this.height * 0.25);
+      case "left":
+        return this.x + (this.width * 0.25);
+      case "right":
+        return this.x + (this.width * 0.75);
+      case "bottom":
+        return this.y + (this.height * 0.75);
+      default: return 0;
+    }
+  }
+  
+  move(sceneWidth,sceneHeight) {
+    const target = this.target;
+    if(target.x < this.edge("left")) {
+      this.x = target.x - (this.width * 0.25);
+    }
+    if((target.x + target.width) > this.edge("right")) {
+      this.x = (target.x + target.width) - (this.width * 0.75);
+    }
+    if(target.y < this.edge("top")) {
+      this.y = target.y - (this.height * 0.25);
+    }
+    if((target.y + target.height) > this.edge("bottom")) {
+      this.y = (target.y + target.height) - (this.height * 0.75);
+    }
+    
+    this.x = Math.max(0,Math.min(sceneWidth - this.width,this.x));
+    this.y = Math.max(0,Math.min(sceneHeight - this.height,this.y));
   }
 }

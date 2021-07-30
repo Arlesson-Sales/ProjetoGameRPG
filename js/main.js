@@ -158,7 +158,7 @@ function main() {
   this.camera = new Camera(0,0,256,256);
   
   //Definindo sprites
-  const player = new Character("npc-6",190,116,16,16,3);
+  const player = new Character("npc-4",190,116,16,16,3);
   player.setAnimation(2,16,true);
   player.events.update = function() {
     this.move();
@@ -177,8 +177,13 @@ function main() {
   //Definindo cenários
   const city = game.createScene("city-1",50,50,16);
   city.addSprite(3,player);
+  city.addSprite(3,npc,true);
+  city.preload = function() {
+    player.setCoords(4,166);
+  }
   
   //configuração final
+  this.camera.target = player;
   this.firstScene = city;
   loadInputsEvents(player);
   createAllSceneTiles();

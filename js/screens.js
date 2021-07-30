@@ -119,11 +119,11 @@ function openCharacterMenu() {
 }
 
 function getDialogLines(text) {
-  //limite 45 letras e 4 linhas
+  //limite 35 letras e 5 linhas
   const letters = text.split("");
   const lines = [];
   while(letters.length > 0) {
-    let line = letters.splice(0,45);
+    let line = letters.splice(0,36);
     lines.push(line.join("").trim());
   }
   return lines;

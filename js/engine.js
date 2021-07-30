@@ -145,6 +145,7 @@ class GameJS {
           }
         }
       }
+      camera.move(currentScene.width,currentScene.height);
     }
   }
   
@@ -157,6 +158,7 @@ class GameJS {
       const tiles = currentScene.tiles;
       
       context.save();
+      context.translate(-camera.x,-camera.y);
       context.clearRect(0,0,currentScene.width,currentScene.height);
       //Renderizando tiles do cenário
       for(let tile of tiles) {
@@ -353,6 +355,11 @@ class Sprite {
     this.animationSource = 0;
     this.animationFrames = 1;
     this.animationSpeed = 5;
+  }
+  
+  setCoords(x,y) {
+    this.x = x;
+    this.y = y;
   }
   
   setSourceCoords(srcX,srcY,srcW,srcH) {

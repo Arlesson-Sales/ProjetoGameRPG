@@ -3,18 +3,18 @@
     {
       "name":"menu",
       "selectable": true,
-      "options": ["status","trabalhos","inventario"],
-      "x": 250, "y": 5,
-      "width": 130,
+      "options": ["status","Magias","trabalhos","inventario"],
+      "x": 132, "y": 3,
+      "width": 110,
       "height": 130
     },
     {
       "name":"dialogo",
       "selectable": false,
       "options": [],
-      "x": 5, "y": 260,
-      "width": 370,
-      "height": 110
+      "x": 3, "y": 150,
+      "width": 240,
+      "height": 90
     }
   ]
 }
