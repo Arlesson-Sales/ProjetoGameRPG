@@ -155,7 +155,7 @@ function createGameImages() {
 }
 
 function main() {
-  this.camera = new Camera(0,0,canvas.width,canvas.height);
+  this.camera = new Camera(0,0,256,256);
   
   //Definindo sprites
   const player = new Character("npc-6",190,116,16,16,3);

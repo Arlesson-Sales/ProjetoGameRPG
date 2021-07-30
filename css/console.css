@@ -10,6 +10,11 @@
   box-sizing: border-box;
 }
 
+canvas {
+  width: 600px;
+  height: 600px;
+}
+
 #console-body {
   width: 400px;
   padding: 10px 5px;
@@ -22,6 +27,7 @@
   margin: auto;
   width: 384px;
   height: 384px;
+  overflow: hidden;
   background-color: #000;
 }
 
