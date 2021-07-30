@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<map version="1.2" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="16" tileheight="16" nextobjectid="1">
+  <properties>
+    <property name="sw1" value="33" />
+    <property name="sw4" value="17" />
+    <property name="sw6" value="2" />
+    <property name="sw2" value="49" />
+    <property name="sw3" value="3" />
+    <property name="sw5" value="36" />
+  </properties>
+  <tileset firstgid="1" name="tileset" columns="16" tilecount="144" tileheight="16" tilewidth="16">
+    <image source="../tileset.png" width="256" height="144" />
+  </tileset>
+  <layer name="Camada 1" width="20" height="20">
+    <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAAM3UQQ6CMBCF4dYKui16AQIewIC6NlHvfySnyZtk0kwpFUxY/Is28AVaSmuMaTeep07IL4i94JypHWWpB7KYC9fuKYd5h/Ec7xolvbvon16T8Cx6UTcx9njHN+Ydynmykr1JeUeqwppXGPM9HSrxamoU1ZGlmY1orjf1fGt7XvH4fBywbmEPPxhr3oBis+S8dcIZFFN6PZr6JjQrNqV3yZg5S3pssbv0/8I9E/36H9yi9wU2lIxdQAYAAA==
+  </data>
+  </layer>
+  <layer name="Camada 2" width="20" height="20">
+    <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAAGNgoD6ooxIGgQYquqsei3n8SGxOKpgnh8TmQpPjAWI+KA0D8kgYm3maSGxJNDleNBoEFJBobObBgCUOcWs0PrHmYQPSUFqABPP40WgQqEZi16Cpl0eicblPG4hlsYjrYRFDBrjM00XjdyOxe8gwDwQMCLiFFPNwxS0ykMYihs08bHGIDvxwiJOaXmBm6SCZqU+CeaD8YQtlSyPppab78IF6KF0LxbhALZF4KAAA1+FsWkAGAAA=
+  </data>
+  </layer>
+</map>

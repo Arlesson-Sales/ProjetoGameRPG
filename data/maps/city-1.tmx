@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<map version="1.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" nextobjectid="1">
+  <properties>
+    <property name="sw4" value="21" />
+    <property name="sw5" value="20" />
+    <property name="sw6" value="19" />
+    <property name="sw1" value="31" />
+    <property name="sw2" value="32" />
+    <property name="sw3" value="18" />
+  </properties>
+  <tileset firstgid="1" name="tileset" columns="16" tilecount="144" tileheight="16" tilewidth="16">
+    <image source="../../assets/tileset.png" width="256" height="144" />
+  </tileset>
+  <layer name="Camada 1" width="50" height="50">
+    <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAAO2ZUW6DMAyGs94ACr0AJ+jDtAts97/SipRf++c6KWkCDpIfPlGCAX80JAZuIYTbDgwHw+eeEsgcedvR+b7yWHO6PPh48BWX6/pVuEyxTcbyPji2jGG0+JYedwIeGjKW92EPLSYVv5cHXz84zZEePdDXc+e9kEPPHrm+0toD9w1o5YE+z8f+DM/35hz++latR4vcpQd+j5H196K0X+M6O/8oztgP69+ZmD08mKXgGFtiS473DosR7pHuV9o8x7UH2rh/TBtijwQenMuYYIoeuRjEWXjMQa+v5FKOx6m4PcbVUo97A9yj3iM3R7uHe7hHejx9VX9r47OVR+odQ24cs7jupR6oL8bwv96W7wzGyvO39OBnQlkf8TPJoLT35oE6i7dZ1HutPLSa16qGrfVI3e89u7AH3iNoNfxZPDCHaP8De/Tqwh6DyDk1FlvnXOqhPbNa57u1X2HuO9M9zh7sMoTnMdg6zxIP6XImtG9icwbrfEs82KWHb381Hj1+y3Qcx3Ecx3GO4xcGhdx6ECcAAA==
+  </data>
+  </layer>
+  <layer name="Camada 2" width="50" height="50">
+    <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAAO3Xyw6CMBAFULbKQ7dKjE1csdG136Z/oB8tjTU2kz4GKDBN7kkamOYCLUSwRQGSbUYcsxtwvlA2pW3fyr4dGFmaOQbOV/WtMX2VOZZzjSVUjsY9bm61td+Ya5aJr/Gbxynxeek16mjqq4nUvr4l3RkZPeeO1K6MfV86R2YuLdnGcObMyaSwt/YfZvskGd1/sfpbknXNm5OBaW5rDyDibDVa6/Yy/W9GVrKhv3/JlnrvTNUV/3c893v4y9nHSqHH5vq2u2o7J20eWmzMvpwUoXH69l31mug9Dz0DTm5N3Pss+Xn4jF0zSUPXoFLWpAAwjuv/eI5UpM6FitS5UGZ7JXVuVKTOBV1r5/o7BwAAAAAAAL8PEptBeRAnAAA=
+  </data>
+  </layer>
+</map>

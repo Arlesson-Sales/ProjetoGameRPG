@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="author" content="Arlesson sales">
+    <meta name="robots" content="index,follow">
+    <meta charset="UTF-8">
+    <title>Game console interface</title>
+    <link rel="stylesheet" href="./css/console.css">
+  </head>
+  <body>
+    <main>
+      <section id="console-body">
+        <div id="screen-container">
+          <canvas width="384" height="384"></canvas>
+        </div>
+        <div id="important-inputs-container">
+          <div data-value="start" class="important-input"></div>
+          <div data-value="select" class="important-input"></div>
+        </div>
+        <div id="controls-container">
+          <div id="arrows-buttons-container" class="input-container">
+            <div class="top">
+              <div data-value="top" class="game-input"></div>
+            </div>
+            <div class="center">
+              <div data-value="left" class="game-input"></div>
+              <div data-value="right" class="game-input"></div>
+            </div>
+            <div class="bottom">
+              <div data-value="bottom" class="game-input"></div>
+            </div>
+          </div>
+          <div id="action-buttons-container" class="input-container">
+            <div class="action-top">
+              <div data-value="upper" class="game-input"></div>
+            </div>
+            <div class="action-center">
+              <div data-value="middle" class="game-input"></div>
+            </div>
+            <div class="action-bottom">
+              <div data-value="lower" class="game-input"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <script src="./js/game.js"></script>
+      <script src="./js/class.js"></script>
+      <script src="./js/screens.js"></script>
+      <script src="./js/index.js"></script>
+    </main>
+  </body>
+</html>

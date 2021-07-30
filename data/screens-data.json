@@ -1,0 +1,20 @@
+{
+  "screens": [
+    {
+      "name":"menu",
+      "selectable": true,
+      "options": ["status","trabalhos","inventario"],
+      "x": 240, "y": 10,
+      "width": 130,
+      "height": 130
+    },
+    {
+      "name":"dialogo",
+      "selectable": false,
+      "options": [],
+      "x": 5, "y": 260,
+      "width": 370,
+      "height": 110
+    }
+  ]
+}

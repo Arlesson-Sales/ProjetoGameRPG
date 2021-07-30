@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<map version="1.2" orientation="orthogonal" renderorder="right-down" width="16" height="9" tilewidth="16" tileheight="16" nextobjectid="1">
+  <properties>
+    <property name="sw1" value="1" />
+    <property name="sw2" value="2" />
+    <property name="sw3" value="3" />
+    <property name="sw4" value="4" />
+    <property name="sw5" value="5" />
+    <property name="sw6" value="6" />
+  </properties>
+  <tileset firstgid="1" name="tileset-1" columns="8" tilecount="40" tileheight="16" tilewidth="16">
+    <image source="tileset-1.png" width="128" height="80" />
+  </tileset>
+  <tileset firstgid="41" name="tileset-2" columns="8" tilecount="72" tileheight="16" tilewidth="16">
+    <image source="tileset-2.png" width="128" height="144" />
+  </tileset>
+  <layer name="Camada 1" width="16" height="9">
+    <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAAI3LxU5DUQBF0Yu7FdeiJbi7t7i7u9v/j1kJUxLeSdboZKeFENLJIJMssskhly666aGXPvoZZ4Q88imgkCKKKaGUAQYZYpgJJhlljDJilFNBJVVUU8M8C0wxzSwzzLFILXXU00AjTcRpZokkKZZZYZU11ukgQScttNJGe/jdBptssc0Ou+yxH/7fAYccccwJp5xxHqG/4JIrrrnhljvuI/QvvPLBJw888sRzhP6Nd774/uP/Ac67ye1AAgAA
+  </data>
+  </layer>
+</map>

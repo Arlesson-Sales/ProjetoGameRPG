@@ -1,0 +1,86 @@
+@charset "UTF-8";
+@font-face {
+  src: url("../fonts/slkscre-webfont.woff") format("opentype");
+  font-family: "default-font";
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#console-body {
+  width: 400px;
+  padding: 10px 5px;
+  margin: 5px auto;
+  border-radius: 10px;
+  background-color: #0f588f;
+}
+
+#screen-container {
+  margin: auto;
+  width: 384px;
+  height: 384px;
+  background-color: #000;
+}
+
+#controls-container {
+  width: 384px;
+  display: flex;
+  margin: 5px auto;
+}
+
+#important-inputs-container {
+  width: 164.5px;
+  display: block;
+  margin: 5px auto;
+}
+
+.input-container {
+  width: 192px;
+}
+
+.important-input {
+  width: 80px;
+  height: 30px;
+  border-radius: 5px;
+  display: inline-block;
+  border: 1px solid #000;
+  background-color: #c98b06;
+}
+
+.game-input {
+  width: 55px;
+  height: 55px;
+  display: block;
+  border-radius: 10px;
+  border: 1px solid #000;
+  background-color: #c98b06;
+}
+
+/* Formatando botões de ação */
+#action-buttons-container div.action-top > div {
+  margin-left: auto;
+}
+
+#action-buttons-container div.action-center > div {
+  margin: auto;
+}
+
+#action-buttons-container div.action-bottom > div {
+  margin-right: auto;
+}
+
+/* Formatando setas de controle */
+#arrows-buttons-container div.top > div, div.bottom > div {
+  margin: auto;
+}
+
+#arrows-buttons-container div.center > div {
+  display: inline-block;
+}
+
+#arrows-buttons-container div.center > div:last-child {
+  margin-left: 77px;
+}
