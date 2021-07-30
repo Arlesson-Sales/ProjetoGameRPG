@@ -3,6 +3,7 @@ class Character extends Sprite {
     let image = game.images.find(currentImage => currentImage.id === imageName);
     super(image,x,y,width,height);
     this.direction = "bottom";
+    this.target = null;
     this.speed = speed;
     this.move_top = false;
     this.move_left = false;
@@ -31,8 +32,7 @@ class Character extends Sprite {
     inputs[direction] = !inputs[direction];
   }
   
-  inside(invader) {
-    const zone = 100;
+  inside(invader,zone = 16) {
     if((invader.x >= (this.x - zone) && (invader.x + invader.width) < (this.x + this.width + zone)) &&
       (invader.y >= (this.y - zone) && (invader.y + invader.height) < (this.y + this.height + zone))) {
       return true;

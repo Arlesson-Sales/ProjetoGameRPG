@@ -344,6 +344,7 @@ class Sprite {
     this.collisionWidth = width;
     this.collisionHeight = height;
     this.events = {
+      action: null,
       update: null,
       collide: null,
     };

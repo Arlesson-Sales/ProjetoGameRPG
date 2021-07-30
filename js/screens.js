@@ -79,11 +79,10 @@ function drawGameScreens(context) {
 function controlGameScreens() {
   const value = event.target.dataset.value;
   const currentScreen = floatScreens.current;
-  
   if(value === "start" && currentScreen?.name !== "dialogo") {
     openCharacterMenu();
   }
-  
+  //Ações de tela
   if(currentScreen?.open) {
     switch(value) {
       case "top":
@@ -102,6 +101,18 @@ function controlGameScreens() {
       break;
       case "lower":
         floatScreens.backToPrevius();
+      break;
+    }
+  } else {
+    //Ações caso não tenha nenhuma tela aberta
+    switch(value) {
+      case "upper":
+        const player = gameSettings.currentControl;
+        const target = player.target;
+        if(target && player.inside(target)) {
+          player.target = null;
+          target?.events.action?.call(target);
+        }
       break;
     }
   }

@@ -1,8 +1,11 @@
 const canvas = document.querySelector("canvas");
 const game = new GameJS(canvas);
-const gameSceneSettings = {
-  names: ["city-1"],
-  datas: {},
+const gameSettings = {
+  currentControl: null,
+  scenes: {
+    names: ["city-1"],
+    datas: {}
+  }
 };
 
 const inputs = {
@@ -36,10 +39,11 @@ async function start() {
 }
 
 async function loadMapsData() {
-  const scenesNames = gameSceneSettings.names;
+  const sceneSettings = gameSettings.scenes;
+  const scenesNames = sceneSettings.names;
   for(let name of scenesNames) {
     const data = await fetchMapData(name);
-    gameSceneSettings.datas[name] = data;
+    sceneSettings.datas[name] = data;
   }
   game.defineGlobalSourceCoords(16,9,16);
 }
@@ -82,7 +86,7 @@ function createAllSceneTiles() {
   const imageName = "Tileset";
   const allScenes = game.scenes;
   allScenes.forEach(scene => {
-    const data = gameSceneSettings.datas[scene.name];
+    const data = gameSettings.scenes.datas[scene.name];
     scene.createSceneTiles(data.layers,imageName,data,null,manageTileCreation);
   });
 }
@@ -102,10 +106,15 @@ function manageTileCreation(tile,id,scene) {
 
 function defineTileBehavior(tile,id) {
   switch(id) {
-    case 25: tile.id = "chest-closed";
+    case 16:
+      tile.id = "plaque";
+    break;
+    case 25:
+      tile.id = "chest-closed";
       tile.open = false;
     break;
-    case 26: tile.id = "chest-open";
+    case 26:
+      tile.id = "chest-open";
       tile.open = true;
     break;
     case 27: 
@@ -159,19 +168,21 @@ function main() {
   
   //Definindo sprites
   const player = new Character("npc-4",190,116,16,16,3);
+  gameSettings.currentControl = player;
   player.setAnimation(2,16,true);
   player.events.update = function() {
     this.move();
+  }
+  player.events.collide = function(collider) {
+    this.target = collider;
   }
   
   const npc = new Character("npc-2",139,116,16,16,1);
   npc.setAnimation(2,16,true);
   npc.setCollision(true);
   npc.text = "Bem vindo estamos precisando de algo para ser o alvo do ataque e com vc meu amor falando de manhã eu quero ver a minha puta safada doida pra ser comida por cima da calcinha dela até agr jogando com vc e te achei mt linda eu ver a calcinha q vc ta usando agr vai princesa linda e  estamos precisando de algo para destruit todo o exercito lutanfo uma terrivel guerra contra a bravis que onsoste em destrutor tudo a nossa querido mundo vijiado e guardado pelos nossas queridos e aforados deuses";
-  npc.events.collide = function() {
-    if(inputs.upper) {
-      openDialogBox(this);
-    }
+  npc.events.action = function() {
+    openDialogBox(this);
   }
   
   //Definindo cenários
