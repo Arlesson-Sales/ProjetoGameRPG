@@ -31,10 +31,10 @@ class Character extends Sprite {
     inputs[direction] = !inputs[direction];
   }
   
-  inside(invasor) {
-    const zone = 16;
-    if((invasor.x >= (this.x - zone) && (invasor.x + invasor.width) < (this.x + this.width + zone)) &&
-      (invasor.y >= (this.y - zone) && (invasor.y + invasor.height) < (this.y + this.height + zone))) {
+  inside(invader) {
+    const zone = 100;
+    if((invader.x >= (this.x - zone) && (invader.x + invader.width) < (this.x + this.width + zone)) &&
+      (invader.y >= (this.y - zone) && (invader.y + invader.height) < (this.y + this.height + zone))) {
       return true;
     }
     return false;
@@ -119,7 +119,6 @@ class Camera {
     this.y = y;
     this.width = width;
     this.height = height;
-    this.target = null;
   }
   
   inside(sprite) {

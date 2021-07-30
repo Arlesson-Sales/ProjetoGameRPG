@@ -116,20 +116,27 @@ class GameJS {
   settings() {
     if(this.running && !this.paused) {
       const camera = this.camera;
+      const cameraInvaders = [];
       const currentScene = this.currentScene;
       const colliders = currentScene.colliders;
       const sprites = currentScene.sprites;
+      
+      for(let currentCollider of colliders) {
+        let insideCamera = camera.inside(currentCollider);
+        if(currentCollider?.collider && insideCamera) {
+          cameraInvaders.push(currentCollider);
+        }
+      }
       
       for(let sprite of sprites) {
         const events = sprite.events;
         events.update?.call(sprite);
         
         if(sprite.collider) {
-          for(let currentCollider of colliders) {
-            let insideCamera = camera.inside(currentCollider);
+          for(let currentCollider of cameraInvaders) {
             let insideZone = sprite.inside(currentCollider);
             
-            if(insideCamera && insideZone && currentCollider?.collider && (currentCollider !== sprite)) {
+            if(insideZone && (currentCollider !== sprite)) {
               if(this.collision(sprite,currentCollider)) {
                 events.collide?.call(sprite,currentCollider);
                 currentCollider.events.collide?.call(currentCollider,sprite);
