@@ -32,7 +32,7 @@ class Character extends Sprite {
     inputs[direction] = !inputs[direction];
   }
   
-  inside(invader,zone = 16) {
+  inside(invader,zone = 20) {
     if((invader.x >= (this.x - zone) && (invader.x + invader.width) < (this.x + this.width + zone)) &&
       (invader.y >= (this.y - zone) && (invader.y + invader.height) < (this.y + this.height + zone))) {
       return true;

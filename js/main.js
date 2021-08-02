@@ -110,12 +110,14 @@ function defineTileBehavior(tile,id) {
       tile.id = "plaque";
     break;
     case 25:
-      tile.id = "chest-closed";
+      tile.id = "chest";
       tile.open = false;
+      tile.events.action = interactAction;
     break;
     case 26:
-      tile.id = "chest-open";
+      tile.id = "chest";
       tile.open = true;
+      tile.events.action = interactAction;
     break;
     case 27: 
       tile.id = "torch";
@@ -130,7 +132,10 @@ function defineTileBehavior(tile,id) {
     case 41: tile.id = "jar"; break;
     case 46: tile.id = "pit"; break;
     case 48: tile.id = "book"; break;
-    case 57: tile.id = "door"; break;
+    case 57:
+      tile.id = "door";
+      tile.events.action = interactAction;
+    break;
     case 59: tile.id = "iron-door"; break;
     case 61: tile.id = "handler"; break;
     case 63:
@@ -163,11 +168,30 @@ function createGameImages() {
   }
 }
 
+function interactAction() {
+  const name = this.id;
+  switch(name) {
+    case "door":
+    case "iron-door":
+      this.sourceX += 16;
+      this.setCollision(false);
+    break;
+    case "chest":
+      if(this.open) {
+        this.sourceX -= 16;
+      } else {
+        this.sourceX += 16;
+      }
+      this.open = !this.open;
+    break;
+  }
+}
+
 function main() {
   this.camera = new Camera(0,0,256,256);
   
   //Definindo sprites
-  const player = new Character("npc-4",190,116,16,16,3);
+  const player = new Character("npc-6",190,116,16,16,3);
   gameSettings.currentControl = player;
   player.setAnimation(2,16,true);
   player.events.update = function() {
@@ -177,10 +201,10 @@ function main() {
     this.target = collider;
   }
   
-  const npc = new Character("npc-2",139,116,16,16,1);
+  const npc = new Character("npc-4",139,116,16,16,1);
   npc.setAnimation(2,16,true);
   npc.setCollision(true);
-  npc.text = "Bem vindo estamos precisando de algo para ser o alvo do ataque e com vc meu amor falando de manhã eu quero ver a minha puta safada doida pra ser comida por cima da calcinha dela até agr jogando com vc e te achei mt linda eu ver a calcinha q vc ta usando agr vai princesa linda e  estamos precisando de algo para destruit todo o exercito lutanfo uma terrivel guerra contra a bravis que onsoste em destrutor tudo a nossa querido mundo vijiado e guardado pelos nossas queridos e aforados deuses";
+  npc.text = "SEJA MUITO BEM VINDO A NOSSA HUMILDE VILA, QUE APOLLO ABENÇOE A SUA TEMPORADA AQUI FORASTEIRO";
   npc.events.action = function() {
     openDialogBox(this);
   }
