@@ -92,7 +92,7 @@ canvas {
 }
 
 /* Formatacao para desktop */
-@media (min-width: 500px) {
+@media (min-width: 700px) {
 
   /*canvas {
     width: 730px;

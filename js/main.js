@@ -2,7 +2,10 @@ const canvas = document.querySelector("canvas");
 const game = new GameJS(canvas);
 const gameSettings = {
   currentControl: null,
-  cameraMeasure: { width: 32, height: 32 },
+  cameraMeasure: {
+    width: 32,
+    height: 32
+  },
   scenes: {
     names: ["city-1"],
     datas: {}
@@ -71,13 +74,12 @@ async function fetchMapData(sceneName) {
 
 function defineCameraSettings() {
   const cameraMeasure = gameSettings.cameraMeasure;
-  if(window.innerWidth < 500) {
-    cameraMeasure.width = 256;
-    cameraMeasure.height = 256;
-  }
-  if(window.innerWidth <= 1000) {
+  if(window.innerWidth >= 700) {
     cameraMeasure.width = 400;
     cameraMeasure.height = 400;
+  } else {
+    cameraMeasure.width = 256;
+    cameraMeasure.height = 256;
   }
 }
 
