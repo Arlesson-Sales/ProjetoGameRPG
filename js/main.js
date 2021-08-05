@@ -10,18 +10,18 @@ const gameSettings = {
 
 const inputs = {
   all: document.querySelectorAll(".game-input,.important-input"),
+  names: ["top","left","right","bottom"],
   start: false,
   select: false,
+
   upper: false,
   middle: false,
   lower: false,
+
   top: false,
   left: false,
   right: false,
   bottom: false,
-  press(name) {
-    this[name] = !this[name]
-  },
 };
 
 //Carregamentos
@@ -29,6 +29,7 @@ async function start() {
   try {
     await loadMapsData();
     await loadScreensData();
+    await loadItemsData();
     createGameImages();
     game.draw = drawGameScreens;
     game.preload = main;
@@ -36,6 +37,12 @@ async function start() {
   } catch(error) {
     window.alert(error.message);
   }
+}
+
+async function fetchData(dataName) {
+  const request = await fetch(`./data/${dataName}-data.json`);
+  const data = await request.json();
+  return data;
 }
 
 async function loadMapsData() {
@@ -66,19 +73,71 @@ function loadInputsEvents(character) {
   const inputsList = inputs.all;
   for(let index = 0; index < 9; index++) {
     let inputName = names.shift();
-    let action = null;
-    inputsList[index].addEventListener("click",controlGameScreens);
+    let touchAction = null;
+    inputsList[index].addEventListener("click",readInputs);
     
     if(index > 1 && index < 6) {
-      action = character.defineDirection.bind(character,inputName);
-      inputsList[index].addEventListener("touchstart",action);
-      inputsList[index].addEventListener("touchend",action);
-    } else {
-      action = inputs.press.bind(inputs,inputName);
-      inputsList[index].addEventListener("touchstart",action);
-      inputsList[index].addEventListener("touchend",action);
+      touchAction = character.defineDirection.bind(character,inputName);
+      inputsList[index].addEventListener("touchstart",touchAction);
+      inputsList[index].addEventListener("touchend",touchAction);
     }
   }
+
+  //adiconando eventos ao teclado
+  document.body.addEventListener("keydown",readInputs);
+  document.body.addEventListener("keyup",clearCharacterMoves);
+}
+
+function readInputs(event) {
+  const keyValue = event?.target.dataset.value ?? convertKey(event.keyCode);
+  const eventType = (event.type === "keydown"); //true = apertou, false = soltou
+
+  if(floatScreens.thereScreenOpen) {
+    controlGameScreens(keyValue);
+    return;
+  }
+
+  if(inputs.names.includes(keyValue)) {
+    gameSettings.currentControl.keyboardControl(keyValue,eventType);
+    return;
+  }
+
+  switch(keyValue) {
+    case "start":
+      openCharacterMenu();
+    break;
+    case "upper":
+      realizeInteraction();
+    break;
+  }
+}
+
+function convertKey(keyCode) {
+  switch(keyCode) {
+    case 32: return "start";
+    case 37: return "left";
+    case 38: return "top";
+    case 39: return "right";
+    case 40: return "bottom";
+    case 65: return "upper";
+    case 83: return "middle";
+    case 68: return "lower";
+  }
+}
+
+function realizeInteraction() {
+  const player = gameSettings.currentControl;
+  const target = player.target;
+  if(target && player.inside(target)) {
+    player.target = null;
+    target?.events.action?.call(target);
+  }
+}
+
+function clearCharacterMoves(event) {
+  const keyValue = convertKey(event.keyCode);
+  const character = gameSettings.currentControl;
+  character[`move_${keyValue}`] = false;
 }
 
 //Comportamento e criação do tiles
@@ -191,7 +250,7 @@ function main() {
   this.camera = new Camera(0,0,256,256);
   
   //Definindo sprites
-  const player = new Character("npc-6",190,116,16,16,3);
+  const player = new Character("npc-6",190,116,16,16,2);
   gameSettings.currentControl = player;
   player.setAnimation(2,16,true);
   player.events.update = function() {
@@ -209,10 +268,19 @@ function main() {
     openDialogBox(this);
   }
   
+  const seller = new Character("npc-1",192,288,16,16,1);
+  seller.setAnimation(2,16,true);
+  seller.setCollision(true);
+  seller.sourceY = 48;
+  seller.events.action = function() {
+    floatScreens.open("store-menu");
+  }
+  
   //Definindo cenários
   const city = game.createScene("city-1",50,50,16);
   city.addSprite(3,player);
   city.addSprite(3,npc,true);
+  city.addSprite(3,seller,true);
   city.preload = function() {
     player.setCoords(4,166);
   }

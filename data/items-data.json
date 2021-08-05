@@ -1,0 +1,15 @@
+{
+  "items": [
+    {
+      "name":"Espada de madeira",
+      "category":"sword",
+      "price": 10,
+      "description":"Uma espada comum e facil de se manusear, normalmente usada por fazendeiros para defender suas planatacoes do ataque de goblins",
+      "attackBonus": 10,
+      "defenseBonus": 0,
+      "healthBonus": 0,
+      "ManaBonus": 0,
+      "speedBonus": 0
+    }
+  ]
+}

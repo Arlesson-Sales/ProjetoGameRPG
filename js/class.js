@@ -2,7 +2,10 @@ class Character extends Sprite {
   constructor(imageName,x,y,width,height,speed) {
     let image = game.images.find(currentImage => currentImage.id === imageName);
     super(image,x,y,width,height);
-    this.direction = "bottom";
+    
+    this.gold = 99999;
+    this.inventory = [];
+    
     this.target = null;
     this.speed = speed;
     this.move_top = false;
@@ -28,16 +31,47 @@ class Character extends Sprite {
     let sourceReference = { top: 48, left: 32, right: 16, bottom: 0 };
     this[`move_${direction}`] = !this[`move_${direction}`];
     this.sourceY = sourceReference[direction];
-    this.direction = direction;
     inputs[direction] = !inputs[direction];
   }
-  
+
+  keyboardControl(keyValue,eventType) {
+    const sourceReference = { top: 48, left: 32, right: 16, bottom: 0 };
+    this[`move_${keyValue}`] = eventType;
+    this.sourceY = sourceReference[keyValue];
+  }
+
   inside(invader,zone = 20) {
     if((invader.x >= (this.x - zone) && (invader.x + invader.width) < (this.x + this.width + zone)) &&
       (invader.y >= (this.y - zone) && (invader.y + invader.height) < (this.y + this.height + zone))) {
       return true;
     }
     return false;
+  }
+}
+
+class Item {
+  constructor(name,category,price) {
+    this.name = name;
+    this.price = price;
+    this.category = category; //helmet, armor, gloves, boots, ring
+    this.description = "";
+    this.attackBonus = 0;
+    this.defenseBonus = 0;
+    this.healthBonus = 0;
+    this.ManaBonus = 0;
+    this.speedBonus = 0;
+  }
+  
+  setBonus(attack,defense,health,mana,speed) {
+    this.attackBonus = attack;
+    this.defenseBonus = defense;
+    this.healthBonus = health ?? 0;
+    this.ManaBonus = mana ?? 0;
+    this.speedBonus = speed ?? 0;
+  }
+  
+  setDescription(text) {
+    this.description = text;
   }
 }
 

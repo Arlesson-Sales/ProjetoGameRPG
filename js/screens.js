@@ -1,9 +1,17 @@
 const floatScreens = {
   all: [],
   stack: [],
+
   get current() {
     let lastIndex = this.stack.length - 1;
     return this.stack[lastIndex];
+  },
+
+  get thereScreenOpen() {
+    if(this.current) {
+      return true;
+    }
+    return false;
   },
   
   find(name) {
@@ -22,6 +30,7 @@ const floatScreens = {
     if(nextScreen && !this.stack.includes(nextScreen)) {
       this.stack.push(nextScreen);
       nextScreen.open = true;
+      game.paused = true;
       return nextScreen;
     }
   },
@@ -48,8 +57,7 @@ const floatScreens = {
 };
 
 async function loadScreensData() {
-  const request = await fetch("./data/screens-data.json");
-  const data = await request.json();
+  const data = await fetchData("screens");
   createGameScreens(data);
 }
 
@@ -76,19 +84,18 @@ function drawGameScreens(context) {
   }
 }
 
-function controlGameScreens() {
-  const value = event.target.dataset.value;
+function controlGameScreens(keyValue) {
   const currentScreen = floatScreens.current;
-  if(value === "start" && currentScreen?.name !== "dialogo") {
-    openCharacterMenu();
-  }
-  //Ações de tela
+  
   if(currentScreen?.open) {
-    switch(value) {
+    switch(keyValue) {
+      case "start":
+        openCharacterMenu();
+      break;
       case "top":
       case "bottom":
         if(currentScreen?.selectable) {
-          currentScreen.chooceOption(value);
+          currentScreen.chooceOption(keyValue);
         }
       break;
       case "upper":
@@ -103,29 +110,21 @@ function controlGameScreens() {
         floatScreens.backToPrevius();
       break;
     }
-  } else {
-    //Ações caso não tenha nenhuma tela aberta
-    switch(value) {
-      case "upper":
-        const player = gameSettings.currentControl;
-        const target = player.target;
-        if(target && player.inside(target)) {
-          player.target = null;
-          target?.events.action?.call(target);
-        }
-      break;
-    }
   }
 }
 
 function openCharacterMenu() {
+  const currentScreen = floatScreens.current;
   const menu = floatScreens.find("menu");
-  if(!menu.open) {
-    floatScreens.open("menu");
-    game.paused = true;
-  } else {
-    floatScreens.closeAll();
-    game.paused = false;
+  
+  if(!currentScreen || currentScreen === menu) {
+    if(!menu.open) {
+      floatScreens.open("menu");
+      game.paused = true;
+    } else {
+      floatScreens.closeAll();
+      game.paused = false;
+    }
   }
 }
 
@@ -145,4 +144,19 @@ function openDialogBox(sprite) {
   const dialogBox = floatScreens.open("dialogo");
   dialogBox?.setOptions(false,lines,5);
   game.paused = true;
+}
+
+//Funções relacionadas as lojas de items
+function openStore(characterStoreList) {
+  const catalogueList = [];
+  while(characterStoreList.length) {
+    let name = characterStoreList.pop();
+    let item = itemsManager.find(name);
+    
+    let catalogueItem = `${item.name} $${item.price}`;
+    catalogueList.push(catalogueItem);
+  }
+  
+  const storeMenu = floatScreens.open("store-menu");
+  storeMenu.setOptions(true,catalogueList);
 }
