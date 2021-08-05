@@ -2,6 +2,7 @@ const canvas = document.querySelector("canvas");
 const game = new GameJS(canvas);
 const gameSettings = {
   currentControl: null,
+  cameraMeasure: { width: 32, height: 32 },
   scenes: {
     names: ["city-1"],
     datas: {}
@@ -66,6 +67,18 @@ async function fetchMapData(sceneName) {
   }
   data.layers = layers.length;
   return data;
+}
+
+function defineCameraSettings() {
+  const cameraMeasure = gameSettings.cameraMeasure;
+  if(window.innerWidth < 500) {
+    cameraMeasure.width = 256;
+    cameraMeasure.height = 256;
+  }
+  if(window.innerWidth <= 1000) {
+    cameraMeasure.width = 400;
+    cameraMeasure.height = 400;
+  }
 }
 
 function loadInputsEvents(character) {
@@ -247,7 +260,9 @@ function interactAction() {
 }
 
 function main() {
-  this.camera = new Camera(0,0,256,256);
+  defineCameraSettings();
+  const cameraMeasure = gameSettings.cameraMeasure;
+  this.camera = new Camera(0,0,cameraMeasure.width,cameraMeasure.height);
   
   //Definindo sprites
   const player = new Character("npc-6",190,116,16,16,2);

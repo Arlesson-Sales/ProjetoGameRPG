@@ -90,3 +90,31 @@ canvas {
 #arrows-buttons-container div.center > div:last-child {
   margin-left: 77px;
 }
+
+/* Formatacao para desktop */
+@media (min-width: 500px) {
+
+  /*canvas {
+    width: 730px;
+    height: 610px;
+  }*/
+
+  #console-body {
+    width: 620px;
+    height: 620px;
+  }
+
+  #screen-container {
+    width: 600px;
+    height: 600px;
+  }
+
+  #important-inputs-container {
+    display: none;
+  }
+
+  #controls-container {
+    display: none;
+  }
+
+}
