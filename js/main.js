@@ -260,12 +260,13 @@ function interactAction() {
 }
 
 function main() {
+  //Definindo camera
   this.camera = new Camera(0,0,16,16);
   defineCameraSettings(this.camera);
   window.addEventListener("resize",defineCameraSettings.bind(null,this.camera),false);
   
   //Definindo sprites
-  const player = new Character("npc-6",190,116,16,16,2);
+  const player = new Character("npc-6",190,116,16,16,5);
   gameSettings.currentControl = player;
   player.setAnimation(2,16,true);
   player.events.update = function() {

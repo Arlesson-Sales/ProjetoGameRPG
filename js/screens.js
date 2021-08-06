@@ -128,22 +128,36 @@ function openCharacterMenu() {
   }
 }
 
-function getDialogLines(text) {
+function getDialogLines(text,letterLimit) {
   //limite 35 letras e 5 linhas
   const letters = text.split("");
   const lines = [];
   while(letters.length > 0) {
-    let line = letters.splice(0,36);
+    let line = letters.splice(0,letterLimit);
     lines.push(line.join("").trim());
   }
   return lines;
 }
 
+function calculateDialogBoxPositions(dialogBox,text) {
+  let letterLimit = 36;
+  if(window.innerWidth >= 700) {
+    dialogBox.y = 280;
+    dialogBox.width = 377;
+    letterLimit = 60;
+  } else {
+    dialogBox.y = 150;
+    dialogBox.width = 240;
+  }
+
+  const lines = getDialogLines(text,letterLimit);
+  dialogBox.setOptions(false,lines,5);
+}
+
 function openDialogBox(sprite) {
-  const lines = getDialogLines(sprite.text);
-  const dialogBox = floatScreens.open("dialogo");
-  dialogBox?.setOptions(false,lines,5);
   game.paused = true;
+  const dialogBox = floatScreens.open("dialogo");
+  calculateDialogBoxPositions(dialogBox,sprite.text);
 }
 
 //Funções relacionadas as lojas de items

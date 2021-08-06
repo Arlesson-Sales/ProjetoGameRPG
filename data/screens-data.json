@@ -4,7 +4,7 @@
       "name":"menu",
       "selectable": true,
       "options": ["status","Magias","trabalhos","inventario"],
-      "x": 132, "y": 3,
+      "x": 5, "y": 5,
       "width": 110,
       "height": 130
     },
@@ -12,7 +12,7 @@
       "name":"dialogo",
       "selectable": false,
       "options": [],
-      "x": 3, "y": 150,
+      "x": 3, "y": 3,
       "width": 240,
       "height": 90
     },
@@ -20,7 +20,7 @@
       "name":"store-menu",
       "selectable": true,
       "options": [],
-      "x": 5, "y": 5,
+      "x": 3, "y": 3,
       "width": 240,
       "height": 130
     }

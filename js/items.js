@@ -16,8 +16,7 @@ function createGameItems(data) {
   items.forEach(itemData => {
     const {
       name, category, price, description,
-      attackBonus, defenseBonus,
-      healthBonus, manaBonus, speedBonus,
+      attackBonus, defenseBonus, healthBonus, manaBonus, speedBonus,
     } = itemData;
     
     const item = new Item(name,category,price);
