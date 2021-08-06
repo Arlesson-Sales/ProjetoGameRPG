@@ -2,10 +2,6 @@ const canvas = document.querySelector("canvas");
 const game = new GameJS(canvas);
 const gameSettings = {
   currentControl: null,
-  cameraMeasure: {
-    width: 32,
-    height: 32
-  },
   scenes: {
     names: ["city-1"],
     datas: {}
@@ -72,8 +68,8 @@ async function fetchMapData(sceneName) {
   return data;
 }
 
-function defineCameraSettings() {
-  const cameraMeasure = gameSettings.cameraMeasure;
+function defineCameraSettings(camera) {
+  const cameraMeasure = { width: 0, height: 0 };
   if(window.innerWidth >= 700) {
     cameraMeasure.width = 400;
     cameraMeasure.height = 400;
@@ -81,6 +77,8 @@ function defineCameraSettings() {
     cameraMeasure.width = 256;
     cameraMeasure.height = 256;
   }
+  camera.width = cameraMeasure.width;
+  camera.height = cameraMeasure.height;
 }
 
 function loadInputsEvents(character) {
@@ -262,9 +260,9 @@ function interactAction() {
 }
 
 function main() {
-  defineCameraSettings();
-  const cameraMeasure = gameSettings.cameraMeasure;
-  this.camera = new Camera(0,0,cameraMeasure.width,cameraMeasure.height);
+  this.camera = new Camera(0,0,16,16);
+  defineCameraSettings(this.camera);
+  window.addEventListener("resize",defineCameraSettings.bind(null,this.camera),false);
   
   //Definindo sprites
   const player = new Character("npc-6",190,116,16,16,2);
