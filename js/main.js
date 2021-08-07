@@ -293,7 +293,7 @@ function main() {
   }
   
   //Definindo cenários
-  const city = game.createScene("city-1",50,50,16);
+  const city = game.createScene("city-1",50,38,16);
   city.addSprite(3,player);
   city.addSprite(3,npc,true);
   city.addSprite(3,seller,true);
