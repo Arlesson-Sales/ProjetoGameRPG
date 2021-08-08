@@ -142,12 +142,12 @@ function getDialogLines(text,letterLimit) {
 function calculateDialogBoxPositions(dialogBox,text) {
   let letterLimit = 36;
   if(window.innerWidth >= 700) {
-    dialogBox.y = 280;
-    dialogBox.width = 377;
-    letterLimit = 60;
+    dialogBox.y = 250;
+    dialogBox.width = 345;
+    letterLimit = 53;
   } else {
-    dialogBox.y = 150;
-    dialogBox.width = 240;
+    dialogBox.y = 160;
+    dialogBox.width = 247;
   }
 
   const lines = getDialogLines(text,letterLimit);

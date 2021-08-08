@@ -167,13 +167,13 @@ class Camera {
   edge(direction) {
     switch(direction) {
       case "top":
-        return this.y + (this.height * 0.25);
+        return this.y + (this.height * 0.50);
       case "left":
-        return this.x + (this.width * 0.25);
+        return this.x + (this.width * 0.50);
       case "right":
-        return this.x + (this.width * 0.75);
+        return this.x + (this.width * 0.50);
       case "bottom":
-        return this.y + (this.height * 0.75);
+        return this.y + (this.height * 0.50);
       default: return 0;
     }
   }
@@ -181,16 +181,16 @@ class Camera {
   move(sceneWidth,sceneHeight) {
     const target = this.target;
     if(target.x < this.edge("left")) {
-      this.x = target.x - (this.width * 0.25);
+      this.x = target.x - (this.width * 0.50);
     }
     if((target.x + target.width) > this.edge("right")) {
-      this.x = (target.x + target.width) - (this.width * 0.75);
+      this.x = (target.x + target.width) - (this.width * 0.50);
     }
     if(target.y < this.edge("top")) {
-      this.y = target.y - (this.height * 0.25);
+      this.y = target.y - (this.height * 0.50);
     }
     if((target.y + target.height) > this.edge("bottom")) {
-      this.y = (target.y + target.height) - (this.height * 0.75);
+      this.y = (target.y + target.height) - (this.height * 0.50);
     }
     
     this.x = Math.max(0,Math.min(sceneWidth - this.width,this.x));

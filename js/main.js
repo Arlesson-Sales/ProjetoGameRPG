@@ -71,8 +71,8 @@ async function fetchMapData(sceneName) {
 function defineCameraSettings(camera) {
   const cameraMeasure = { width: 0, height: 0 };
   if(window.innerWidth >= 700) {
-    cameraMeasure.width = 400;
-    cameraMeasure.height = 400;
+    cameraMeasure.width = 352;
+    cameraMeasure.height = 352;
   } else {
     cameraMeasure.width = 256;
     cameraMeasure.height = 256;
@@ -128,10 +128,15 @@ function readInputs(event) {
 function convertKey(keyCode) {
   switch(keyCode) {
     case 32: return "start";
+    case 100:
     case 37: return "left";
+    case 104:
     case 38: return "top";
+    case 102:
     case 39: return "right";
+    case 98:
     case 40: return "bottom";
+    case 101:
     case 65: return "upper";
     case 83: return "middle";
     case 68: return "lower";
@@ -266,7 +271,7 @@ function main() {
   window.addEventListener("resize",defineCameraSettings.bind(null,this.camera),false);
   
   //Definindo sprites
-  const player = new Character("npc-6",190,116,16,16,5);
+  const player = new Character("npc-6",64,80,16,16,2);
   gameSettings.currentControl = player;
   player.setAnimation(2,16,true);
   player.events.update = function() {
@@ -293,12 +298,12 @@ function main() {
   }
   
   //Definindo cenários
-  const city = game.createScene("city-1",50,38,16);
+  const city = game.createScene("city-1",50,40,16);
   city.addSprite(3,player);
   city.addSprite(3,npc,true);
   city.addSprite(3,seller,true);
   city.preload = function() {
-    player.setCoords(4,166);
+    player.setCoords(64,80);
   }
   
   //configuração final
