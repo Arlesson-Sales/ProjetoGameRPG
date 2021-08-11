@@ -96,7 +96,7 @@ function loadInputsEvents(character) {
     }
   }
 
-  //adiconando eventos ao teclado
+  //adiconando eventos de movimento ao teclado
   document.body.addEventListener("keydown",readInputs);
   document.body.addEventListener("keyup",clearCharacterMoves);
 }
