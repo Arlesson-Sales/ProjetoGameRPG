@@ -1,0 +1,26 @@
+{
+  "npcs": [
+    {
+      "id": "village",
+      "name":"Temanus",
+      "imageName": "npc-4",
+      "sceneName": "city-1",
+      "type": "passive",
+      "message": "seja bem vindo a nossa humilde vila",
+      "x": 139,
+      "y": 116,
+      "layer": 3
+    },
+    {
+      "id": "merchant",
+      "name":"Tianus",
+      "imageName": "npc-2",
+      "sceneName": "city-1",
+      "type": "passive",
+      "message": "ola sou um marcador, o que vai querer?",
+      "x": 192,
+      "y": 288,
+      "layer": 3
+    }
+  ]
+}
