@@ -119,7 +119,7 @@ function readInputs(event) {
     case "start":
       openCharacterMenu();
     break;
-    case "upper":
+    case "middle":
       realizeInteraction();
     break;
   }
@@ -211,7 +211,7 @@ function defineTileBehavior(tile,id) {
     case 48: tile.id = "book"; break;
     case 57:
       tile.id = "door";
-      tile.events.action = interactAction;
+      tile.events.collide = interactAction;
     break;
     case 59: tile.id = "iron-door"; break;
     case 61: tile.id = "handler"; break;
@@ -248,6 +248,12 @@ function createGameImages() {
 function interactAction() {
   const name = this.id;
   switch(name) {
+    case "village":
+      openDialogBox(this);
+    break;
+    case "merchant":
+      openStore(this);
+    break;
     case "door":
     case "iron-door":
       this.sourceX += 16;
@@ -262,6 +268,26 @@ function interactAction() {
       this.open = !this.open;
     break;
   }
+}
+
+//npcs
+async function loadNpcsData() {
+  const data = await fetchData("npcs");
+  createGameNpcs(data);
+}
+
+function createGameNpcs(data) {
+  data.forEach(npcData => {
+    const { id, name, imageName, x, y, type, layer, sceneName, message } = npcData;
+    const scene = game.getScene(sceneName);
+    const npc = new Character(image,x,y,16,16,1);
+    
+    npc.setAnimation(2,16,true);
+    npc.message = message;
+    npc.id = id;
+    npc.events.action = interactAction;
+    scene.addSprite(layer,npc,true);
+  });
 }
 
 function main() {
@@ -284,18 +310,17 @@ function main() {
   const npc = new Character("npc-4",139,116,16,16,1);
   npc.setAnimation(2,16,true);
   npc.setCollision(true);
-  npc.text = "SEJA MUITO BEM VINDO A NOSSA HUMILDE VILA, QUE APOLLO ABENÇOE A SUA TEMPORADA AQUI FORASTEIRO";
-  npc.events.action = function() {
-    openDialogBox(this);
-  }
+  npc.text = "EU APENAD FALO TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE ";
+  npc.events.action = interactAction;
+  npc.id = "village";
   
   const seller = new Character("npc-1",192,288,16,16,1);
   seller.setAnimation(2,16,true);
   seller.setCollision(true);
   seller.sourceY = 48;
-  seller.events.action = function() {
-    floatScreens.open("store-menu");
-  }
+  seller.id = "merchant";
+  seller.storeList = ["Clava","Espada de madeira"];
+  seller.events.action = interactAction;
   
   //Definindo cenários
   const city = game.createScene("city-1",50,40,16);

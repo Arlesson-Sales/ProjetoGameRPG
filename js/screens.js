@@ -115,10 +115,12 @@ function controlGameScreens(keyValue) {
 
 function openCharacterMenu() {
   const currentScreen = floatScreens.current;
+  const statusMenu = floatScreens.find("status");
   const menu = floatScreens.find("menu");
   
   if(!currentScreen || currentScreen === menu) {
     if(!menu.open) {
+      floatScreens.open("status");
       floatScreens.open("menu");
       game.paused = true;
     } else {
@@ -128,6 +130,7 @@ function openCharacterMenu() {
   }
 }
 
+//Funções responsáveis pela controle da caixa de diálogo
 function getDialogLines(text,letterLimit) {
   //limite 35 letras e 5 linhas
   const letters = text.split("");
@@ -161,15 +164,13 @@ function openDialogBox(sprite) {
 }
 
 //Funções relacionadas as lojas de items
-function openStore(characterStoreList) {
-  const catalogueList = [];
-  while(characterStoreList.length) {
-    let name = characterStoreList.pop();
-    let item = itemsManager.find(name);
-    
-    let catalogueItem = `${item.name} $${item.price}`;
-    catalogueList.push(catalogueItem);
-  }
+function openStore(sprite) {
+  const characterStoreList = sprite.storeList;
+  const catalogueList = characterStoreList.map(itemName => {
+    const item = itemsManager.find(itemName);
+    let catalogue = `${item.name} $${item.price}`;
+    return catalogue;
+  });
   
   const storeMenu = floatScreens.open("store-menu");
   storeMenu.setOptions(true,catalogueList);

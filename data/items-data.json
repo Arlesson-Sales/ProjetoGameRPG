@@ -10,6 +10,17 @@
       "healthBonus": 0,
       "ManaBonus": 0,
       "speedBonus": 0
+    },
+    {
+      "name":"Clava",
+      "category":"macer",
+      "price": 5,
+      "description":"Uma clava feita de madeira comum, não muito pesada mas otima para esmagar a cabeça de alguém",
+      "attackBonus": 5,
+      "defenseBonus": 0,
+      "healthBonus": 0,
+      "ManaBonus": 0,
+      "speedBonus": 0
     }
   ]
 }

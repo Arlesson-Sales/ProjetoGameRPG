@@ -2,10 +2,6 @@ class Character extends Sprite {
   constructor(imageName,x,y,width,height,speed) {
     let image = game.images.find(currentImage => currentImage.id === imageName);
     super(image,x,y,width,height);
-    
-    this.gold = 99999;
-    this.inventory = [];
-    
     this.target = null;
     this.speed = speed;
     this.move_top = false;
@@ -105,8 +101,10 @@ class GameScreen {
   spliceOptions() {
     const limit = this.limit;
     const options = this.options;
-    if(options.length > 4) {
+    if(options.length > limit) {
       options.splice(0,limit);
+    } else {
+      floatScreens.backToPrevius();
     }
   }
   
