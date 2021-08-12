@@ -2,10 +2,8 @@ const canvas = document.querySelector("canvas");
 const game = new GameJS(canvas);
 const gameSettings = {
   currentControl: null,
-  scenes: {
-    names: ["city-1"],
-    datas: {}
-  }
+  scenesNames: ["city-1"],
+  sceneDatas: null,
 };
 
 const inputs = {
@@ -27,10 +25,10 @@ const inputs = {
 //Carregamentos
 async function start() {
   try {
-    await loadMapsData();
+    await loadScenesData();
     await loadScreensData();
+    await loadNpcsData();
     await loadItemsData();
-    createGameImages();
     game.draw = drawGameScreens;
     game.preload = main;
     game.start();
@@ -45,27 +43,31 @@ async function fetchData(dataName) {
   return data;
 }
 
-async function loadMapsData() {
-  const sceneSettings = gameSettings.scenes;
-  const scenesNames = sceneSettings.names;
-  for(let name of scenesNames) {
-    const data = await fetchMapData(name);
-    sceneSettings.datas[name] = data;
-  }
-  game.defineGlobalSourceCoords(16,9,16);
+//Carregamento dos mapas do jogo
+function getSceneProps(name,dataJson) {
+  const { width, height, layers, tilewidth } = dataJson;
+  const data = [...layers[0].data, ...layers[1].data];
+
+  return { name, width, height, data, tilewidth };
 }
 
-async function fetchMapData(sceneName) {
-  const request = await fetch(`./data/maps/${sceneName}.json`);
-  const jsonData = await request.json();
-  const layers = jsonData.layers;
-  const data = [];
-  for(let layer of layers) {
-    let tilesIds = layer.data;
-    data.push(...tilesIds);
+async function fetchSceneData(name) {
+  const request = await fetch(`./data/maps/${name}.json`);
+  const data = await request.json();
+  return getSceneProps(name,data);
+}
+
+async function loadScenesData() {
+  const sceneNames = gameSettings.scenesNames;
+  const sceneDatas = [];
+  for(let name of sceneNames) {
+    const data = await fetchSceneData(name);
+    sceneDatas.push(data);
   }
-  data.layers = layers.length;
-  return data;
+  gameSettings.sceneDatas = sceneDatas;
+  game.defineGlobalSourceCoords(16,9,16);
+  createGameImages();
+  createAllScenes();
 }
 
 function defineCameraSettings(camera) {
@@ -81,6 +83,30 @@ function defineCameraSettings(camera) {
   camera.height = cameraMeasure.height;
 }
 
+//Carregamento dos npcs do jogo
+async function loadNpcsData() {
+  const data = await fetchData("npcs");
+  createGameNpcs(data);
+}
+
+function createGameNpcs(data) {
+  data.npcs.forEach(npcData => {
+    const { id, name, storeList, imageName, x, y, type, layer, sceneName, message } = npcData;
+    const scene = game.getScene(sceneName);
+    const npc = new Character(imageName,x,y,16,16,1);
+    
+    npc.setAnimation(2,16,true);
+    npc.message = message;
+    npc.id = id;
+    npc.type = type;
+    npc.name = name;
+    npc.storeList = storeList;
+    npc.events.action = interactAction;
+    scene.addSprite(layer,npc,true);
+  });
+}
+
+//Acoes de controle do game
 function loadInputsEvents(character) {
   const names = ["start","select","top","left","right","bottom","upper","middle","lower"];
   const inputsList = inputs.all;
@@ -159,12 +185,14 @@ function clearCharacterMoves(event) {
 }
 
 //Comportamento e criação do tiles
-function createAllSceneTiles() {
+function createAllScenes() {
+  const sceneDatas = gameSettings.sceneDatas;
   const imageName = "Tileset";
-  const allScenes = game.scenes;
-  allScenes.forEach(scene => {
-    const data = gameSettings.scenes.datas[scene.name];
-    scene.createSceneTiles(data.layers,imageName,data,null,manageTileCreation);
+
+  sceneDatas.forEach(dataInfos => {
+    const { name, width, height, tilewidth, data } = dataInfos;
+    const scene = game.createScene(name,width,height,tilewidth);
+    scene.createSceneTiles(2,imageName,data,null,manageTileCreation);
   });
 }
 
@@ -270,26 +298,6 @@ function interactAction() {
   }
 }
 
-//npcs
-async function loadNpcsData() {
-  const data = await fetchData("npcs");
-  createGameNpcs(data);
-}
-
-function createGameNpcs(data) {
-  data.forEach(npcData => {
-    const { id, name, imageName, x, y, type, layer, sceneName, message } = npcData;
-    const scene = game.getScene(sceneName);
-    const npc = new Character(image,x,y,16,16,1);
-    
-    npc.setAnimation(2,16,true);
-    npc.message = message;
-    npc.id = id;
-    npc.events.action = interactAction;
-    scene.addSprite(layer,npc,true);
-  });
-}
-
 function main() {
   //Definindo camera
   this.camera = new Camera(0,0,16,16);
@@ -297,7 +305,7 @@ function main() {
   window.addEventListener("resize",defineCameraSettings.bind(null,this.camera),false);
   
   //Definindo sprites
-  const player = new Character("npc-6",64,80,16,16,2);
+  const player = new Character("npc-6",64,80,16,16,5);
   gameSettings.currentControl = player;
   player.setAnimation(2,16,true);
   player.events.update = function() {
@@ -307,7 +315,7 @@ function main() {
     this.target = collider;
   }
   
-  const npc = new Character("npc-4",139,116,16,16,1);
+  /*const npc = new Character("npc-4",139,116,16,16,1);
   npc.setAnimation(2,16,true);
   npc.setCollision(true);
   npc.text = "EU APENAD FALO TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE ";
@@ -321,21 +329,23 @@ function main() {
   seller.id = "merchant";
   seller.storeList = ["Clava","Espada de madeira"];
   seller.events.action = interactAction;
-  
+  */
+  const city = this.getScene("city-1");
+  city.addSprite(3,player);
+
   //Definindo cenários
-  const city = game.createScene("city-1",50,40,16);
+  /*const city = game.createScene("city-1",50,40,16);
   city.addSprite(3,player);
   city.addSprite(3,npc,true);
   city.addSprite(3,seller,true);
   city.preload = function() {
     player.setCoords(64,80);
-  }
+  }*/
   
   //configuração final
   this.camera.target = player;
   this.firstScene = city;
   loadInputsEvents(player);
-  createAllSceneTiles();
 }
 
 window.onload = start;

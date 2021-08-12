@@ -2,6 +2,10 @@ class Character extends Sprite {
   constructor(imageName,x,y,width,height,speed) {
     let image = game.images.find(currentImage => currentImage.id === imageName);
     super(image,x,y,width,height);
+    this.id = "";
+    this.type = "";
+    this.name = "";
+    
     this.target = null;
     this.speed = speed;
     this.move_top = false;
