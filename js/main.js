@@ -29,6 +29,7 @@ async function start() {
     await loadScreensData();
     await loadNpcsData();
     await loadItemsData();
+
     game.draw = drawGameScreens;
     game.preload = main;
     game.start();
@@ -91,7 +92,16 @@ async function loadNpcsData() {
 
 function createGameNpcs(data) {
   data.npcs.forEach(npcData => {
-    const { id, name, storeList, imageName, x, y, type, layer, sceneName, message } = npcData;
+    const {
+      id,
+      type,
+      name,
+      message,
+      storeList,
+      imageName,
+      x, y, layer, sceneName
+    } = npcData;
+    
     const scene = game.getScene(sceneName);
     const npc = new Character(imageName,x,y,16,16,1);
     
@@ -116,7 +126,7 @@ function loadInputsEvents(character) {
     inputsList[index].addEventListener("click",readInputs);
     
     if(index > 1 && index < 6) {
-      touchAction = character.defineDirection.bind(character,inputName);
+      touchAction = character.touchControl.bind(character,inputName);
       inputsList[index].addEventListener("touchstart",touchAction);
       inputsList[index].addEventListener("touchend",touchAction);
     }
@@ -162,8 +172,8 @@ function convertKey(keyCode) {
     case 39: return "right";
     case 98:
     case 40: return "bottom";
-    case 101:
     case 65: return "upper";
+    case 101:
     case 83: return "middle";
     case 68: return "lower";
   }
@@ -305,7 +315,7 @@ function main() {
   window.addEventListener("resize",defineCameraSettings.bind(null,this.camera),false);
   
   //Definindo sprites
-  const player = new Character("npc-6",64,80,16,16,5);
+  const player = new Character("npc-6",64,80,16,16,2);
   gameSettings.currentControl = player;
   player.setAnimation(2,16,true);
   player.events.update = function() {
@@ -315,33 +325,9 @@ function main() {
     this.target = collider;
   }
   
-  /*const npc = new Character("npc-4",139,116,16,16,1);
-  npc.setAnimation(2,16,true);
-  npc.setCollision(true);
-  npc.text = "EU APENAD FALO TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE ";
-  npc.events.action = interactAction;
-  npc.id = "village";
-  
-  const seller = new Character("npc-1",192,288,16,16,1);
-  seller.setAnimation(2,16,true);
-  seller.setCollision(true);
-  seller.sourceY = 48;
-  seller.id = "merchant";
-  seller.storeList = ["Clava","Espada de madeira"];
-  seller.events.action = interactAction;
-  */
   const city = this.getScene("city-1");
   city.addSprite(3,player);
 
-  //Definindo cenários
-  /*const city = game.createScene("city-1",50,40,16);
-  city.addSprite(3,player);
-  city.addSprite(3,npc,true);
-  city.addSprite(3,seller,true);
-  city.preload = function() {
-    player.setCoords(64,80);
-  }*/
-  
   //configuração final
   this.camera.target = player;
   this.firstScene = city;

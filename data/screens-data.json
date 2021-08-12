@@ -3,7 +3,7 @@
     {
       "name":"menu",
       "selectable": true,
-      "options": ["Items","magias","trabalhos"],
+      "options": ["Items","status","magias","trabalhos"],
       "x": 5, "y": 5,
       "width": 110,
       "height": 130

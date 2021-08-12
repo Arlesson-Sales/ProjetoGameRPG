@@ -18,7 +18,7 @@
       "sceneName": "city-1",
       "type": "passive",
       "message": "ola sou um marcador, o que vai querer?",
-      "storeList": [],
+      "storeList": ["Espada de madeira","Clava"],
       "x": 192,
       "y": 288,
       "layer": 3

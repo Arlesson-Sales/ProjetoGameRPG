@@ -115,12 +115,10 @@ function controlGameScreens(keyValue) {
 
 function openCharacterMenu() {
   const currentScreen = floatScreens.current;
-  const statusMenu = floatScreens.find("status");
   const menu = floatScreens.find("menu");
   
   if(!currentScreen || currentScreen === menu) {
     if(!menu.open) {
-      floatScreens.open("status");
       floatScreens.open("menu");
       game.paused = true;
     } else {
@@ -132,7 +130,6 @@ function openCharacterMenu() {
 
 //Funções responsáveis pela controle da caixa de diálogo
 function getDialogLines(text,letterLimit) {
-  //limite 35 letras e 5 linhas
   const letters = text.split("");
   const lines = [];
   while(letters.length > 0) {
@@ -160,7 +157,7 @@ function calculateDialogBoxPositions(dialogBox,text) {
 function openDialogBox(sprite) {
   game.paused = true;
   const dialogBox = floatScreens.open("dialogo");
-  calculateDialogBoxPositions(dialogBox,sprite.text);
+  calculateDialogBoxPositions(dialogBox,sprite.message);
 }
 
 //Funções relacionadas as lojas de items

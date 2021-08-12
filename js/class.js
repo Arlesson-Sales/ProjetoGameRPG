@@ -5,7 +5,7 @@ class Character extends Sprite {
     this.id = "";
     this.type = "";
     this.name = "";
-    
+
     this.target = null;
     this.speed = speed;
     this.move_top = false;
@@ -27,7 +27,7 @@ class Character extends Sprite {
     }
   }
   
-  defineDirection(direction) {
+  touchControl(direction) {
     let sourceReference = { top: 48, left: 32, right: 16, bottom: 0 };
     this[`move_${direction}`] = !this[`move_${direction}`];
     this.sourceY = sourceReference[direction];
