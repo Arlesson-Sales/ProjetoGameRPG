@@ -20,9 +20,8 @@ const floatScreens = {
   },
   
   goToNext() {
-    const currentScreen = this.current;
-    const valueName = currentScreen.optionValue;
-    this.open(valueName);
+    const valueName = this.current.optionValue;
+    switch(valueName) {}
   },
   
   open(name) {
