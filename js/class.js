@@ -5,6 +5,8 @@ class Character extends Sprite {
     this.id = "";
     this.type = "";
     this.name = "";
+    this.gold = 10;
+    this.inventory = [];
 
     this.target = null;
     this.speed = speed;
@@ -83,6 +85,8 @@ class GameScreen {
     this.options = [];
     this.optionValue = "";
     this.selectable = true;
+    this.dialogCallback = null; //chamado quando a tela do tipo dialogo e fechada
+    this.optionCallback = null; //chamado quando um item de uma lista e selecionado
     
     this.x = x;
     this.y = y;
@@ -109,6 +113,7 @@ class GameScreen {
       options.splice(0,limit);
     } else {
       floatScreens.backToPrevius();
+      this.dialogCallback?.();
     }
   }
   

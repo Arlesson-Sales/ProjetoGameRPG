@@ -21,7 +21,16 @@ const floatScreens = {
   
   goToNext() {
     const valueName = this.current.optionValue;
-    switch(valueName) {}
+    switch(valueName) {
+      case "items":
+        openCharacterInventory();
+      break;
+      case "comprar":
+        const storeList = this.current.storeList;
+        openStore(storeList);
+      break;
+      default: this.open(valueName);
+    }
   },
   
   open(name) {
@@ -97,12 +106,12 @@ function controlGameScreens(keyValue) {
           currentScreen.chooceOption(keyValue);
         }
       break;
-      case "upper":
-        floatScreens.goToNext();
-      break;
       case "middle":
         if(currentScreen.name === "dialogo") {
           currentScreen.spliceOptions();
+        } else {
+          currentScreen.optionCallback?.call(currentScreen);
+          floatScreens.goToNext();
         }
       break;
       case "lower":
@@ -125,6 +134,28 @@ function openCharacterMenu() {
       game.paused = false;
     }
   }
+}
+
+function openCharacterInventory() {
+  const player = gameSettings.currentControl;
+  const inventory = player.inventory;
+  const items = inventory.reduce((acc,item) => {
+    let name = item.name;
+    if(acc[name]) {
+      acc[name]++;
+    } else {
+      acc[name] = 1;
+    }
+    return acc;
+  },{});
+
+  const itemNames = [];
+  for(let name in items) {
+    itemNames.push(`${name} ${items[name]}x`);
+  }
+
+  const itemsScreen = floatScreens.open("items");
+  itemsScreen.setOptions(true,itemNames); 
 }
 
 //Funções responsáveis pela controle da caixa de diálogo
@@ -153,21 +184,22 @@ function calculateDialogBoxPositions(dialogBox,text) {
   dialogBox.setOptions(false,lines,5);
 }
 
-function openDialogBox(sprite) {
+function openDialogBox(message,callback) {
   game.paused = true;
   const dialogBox = floatScreens.open("dialogo");
-  calculateDialogBoxPositions(dialogBox,sprite.message);
+  dialogBox.dialogCallback = callback;
+  calculateDialogBoxPositions(dialogBox,message);
 }
 
 //Funções relacionadas as lojas de items
-function openStore(sprite) {
-  const characterStoreList = sprite.storeList;
-  const catalogueList = characterStoreList.map(itemName => {
+function openStore(storeList) {
+  const catalogueList = storeList.map(itemName => {
     const item = itemsManager.find(itemName);
     let catalogue = `${item.name} $${item.price}`;
     return catalogue;
   });
   
-  const storeMenu = floatScreens.open("store-menu");
+  const storeMenu = floatScreens.open("store");
   storeMenu.setOptions(true,catalogueList);
+  storeMenu.optionCallback = buyItem;
 }

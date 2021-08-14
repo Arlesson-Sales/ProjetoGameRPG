@@ -111,7 +111,7 @@ function createGameNpcs(data) {
     npc.type = type;
     npc.name = name;
     npc.storeList = storeList;
-    npc.events.action = interactAction;
+    npc.events.action = npcInteraction;
     scene.addSprite(layer,npc,true);
   });
 }
@@ -244,7 +244,11 @@ function defineTileBehavior(tile,id) {
       tile.id = "water"; 
       tile.setAnimation(2,10,true);
     break;
-    case 41: tile.id = "jar"; break;
+    case 41:
+      tile.id = "jar";
+      tile.broken = false;
+      tile.events.action = interactAction;
+    break;
     case 46: tile.id = "pit"; break;
     case 48: tile.id = "book"; break;
     case 57:
@@ -283,19 +287,34 @@ function createGameImages() {
   }
 }
 
+function npcInteraction() {
+  const message = this.message;
+  const storeList = this.storeList;
+
+  if(this.id === "merchant") {
+    openDialogBox(message,() => {
+      const tradeSelector = floatScreens.open("trade-selector");
+      tradeSelector.storeList = storeList;
+    });
+  } else {
+    openDialogBox(message);
+  }
+}
+
 function interactAction() {
   const name = this.id;
   switch(name) {
-    case "village":
-      openDialogBox(this);
-    break;
-    case "merchant":
-      openStore(this);
-    break;
     case "door":
     case "iron-door":
       this.sourceX += 16;
       this.setCollision(false);
+    break;
+    case "jar":
+      if(!this.broken) {
+        this.sourceX += 16;
+        this.broken = true;
+        this.setCollision(false);
+      }
     break;
     case "chest":
       if(this.open) {
