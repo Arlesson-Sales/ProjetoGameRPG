@@ -24,15 +24,20 @@ function createItem(itemData) {
 }
 
 //funcoes de compra e venda de items
-function getItemName(itemCatalogue) {
-  let indexFinal = itemCatalogue.indexOf("$");
+function getItemName(actionType,itemCatalogue) {
+  let indexFinal = 0;
+  if(actionType === "buy") {
+    indexFinal = itemCatalogue.indexOf("$");
+  } else {
+    indexFinal = itemCatalogue.indexOf("x");
+  }
   let name = itemCatalogue.substr(0,--indexFinal);
   return name;
 }
 
 function buyItem() {
   const player = gameSettings.currentControl;
-  const itemName = getItemName(this.optionValue);
+  const itemName = getItemName("buy",this.optionValue);
   const item = itemsManager.find(itemName);
 
   if(player.gold >= item.price) {
@@ -41,5 +46,24 @@ function buyItem() {
     openDialogBox(`obrigado voce comprou ${item.name}`);
   } else {
     openDialogBox("Desculpe mas voce nao possui ouro suficiente");
+  }
+}
+
+function sellItem() {
+  if(this.optionValue) {
+    const player = gameSettings.currentControl;
+    const itemName = getItemName("sell",this.optionValue);
+    
+    let itemIndex = 0;
+    const item = player.inventory.find((item,index) => {
+      if(item.name === itemName) {
+        itemIndex = index;
+        return item;
+      }
+    });
+
+    player.gold += item.price;
+    player.inventory.splice(itemIndex,1);
+    openDialogBox(`voce vendeu ${item.name} por ${item.price} moedas de ouro`,() => floatScreens.backToPrevius());
   }
 }

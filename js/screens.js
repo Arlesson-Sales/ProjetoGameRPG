@@ -29,6 +29,9 @@ const floatScreens = {
         const storeList = this.current.storeList;
         openStore(storeList);
       break;
+      case "vender":
+        openCharacterInventory(sellItem);
+      break;
       default: this.open(valueName);
     }
   },
@@ -115,7 +118,9 @@ function controlGameScreens(keyValue) {
         }
       break;
       case "lower":
-        floatScreens.backToPrevius();
+        if(currentScreen.name !== "dialogo") {
+          floatScreens.backToPrevius();
+        }
       break;
     }
   }
@@ -136,7 +141,7 @@ function openCharacterMenu() {
   }
 }
 
-function openCharacterInventory() {
+function openCharacterInventory(optionCallback) {
   const player = gameSettings.currentControl;
   const inventory = player.inventory;
   const items = inventory.reduce((acc,item) => {
@@ -151,10 +156,11 @@ function openCharacterInventory() {
 
   const itemNames = [];
   for(let name in items) {
-    itemNames.push(`${name} ${items[name]}x`);
+    itemNames.push(`${name} x${items[name]}`);
   }
 
   const itemsScreen = floatScreens.open("items");
+  itemsScreen.optionCallback = optionCallback;
   itemsScreen.setOptions(true,itemNames); 
 }
 
