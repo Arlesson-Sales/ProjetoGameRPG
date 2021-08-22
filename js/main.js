@@ -293,6 +293,7 @@ function npcInteraction() {
 
   if(this.id === "merchant") {
     openDialogBox(message,() => {
+      openGoldScreen(3,60);
       const tradeSelector = floatScreens.open("trade-selector");
       tradeSelector.storeList = storeList;
     });

@@ -9,6 +9,14 @@
       "height": 130
     },
     {
+      "name":"gold-screen",
+      "selectable": false,
+      "options": [],
+      "x": 5, "y": 5,
+      "width": 110,
+      "height": 30
+    },
+    {
       "name":"items",
       "selectable": true,
       "options": [],
@@ -45,8 +53,8 @@
       "selectable": true,
       "options": [],
       "x": 3, "y": 3,
-      "width": 240,
-      "height": 130
+      "width": 200,
+      "height": 200
     }
   ]
 }

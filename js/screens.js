@@ -64,6 +64,7 @@ const floatScreens = {
       const screen = stack.pop();
       screen.open = false;
     }
+    game.paused = false;
   }
 };
 
@@ -118,12 +119,29 @@ function controlGameScreens(keyValue) {
         }
       break;
       case "lower":
-        if(currentScreen.name !== "dialogo") {
+        if(currentScreen.name === "trade-selector") {
+          floatScreens.closeAll();
+        } else if(currentScreen.name !== "dialogo") {
           floatScreens.backToPrevius();
         }
       break;
     }
   }
+}
+
+function openGoldScreen(x,y) {
+  const goldScreen = floatScreens.open("gold-screen");
+  let playerGold = gameSettings.currentControl.gold;
+  goldScreen.x = x, goldScreen.y = y;
+  goldScreen.setOptions(false,[`ouro: ${playerGold}`],1);
+}
+
+function updateGoldScreen(x,y) {
+  const goldScreen = floatScreens.find("gold-screen");
+  goldScreen.x = x ?? goldScreen.x;
+  goldScreen.y = y ?? goldScreen.y;
+  let playerGold = gameSettings.currentControl.gold;
+  goldScreen.setOptions(false,[`ouro: ${playerGold}`],1);
 }
 
 function openCharacterMenu() {
@@ -132,6 +150,7 @@ function openCharacterMenu() {
   
   if(!currentScreen || currentScreen === menu) {
     if(!menu.open) {
+      openGoldScreen(5,140);
       floatScreens.open("menu");
       game.paused = true;
     } else {
@@ -204,7 +223,8 @@ function openStore(storeList) {
     let catalogue = `${item.name} $${item.price}`;
     return catalogue;
   });
-  
+
+  updateGoldScreen(3,210);;
   const storeMenu = floatScreens.open("store");
   storeMenu.setOptions(true,catalogueList);
   storeMenu.optionCallback = buyItem;

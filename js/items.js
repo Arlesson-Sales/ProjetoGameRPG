@@ -47,6 +47,7 @@ function buyItem() {
   } else {
     openDialogBox("Desculpe mas voce nao possui ouro suficiente");
   }
+  updateGoldScreen();
 }
 
 function sellItem() {
@@ -65,5 +66,6 @@ function sellItem() {
     player.gold += item.price;
     player.inventory.splice(itemIndex,1);
     openDialogBox(`voce vendeu ${item.name} por ${item.price} moedas de ouro`,() => floatScreens.backToPrevius());
+    updateGoldScreen();
   }
 }
