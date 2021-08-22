@@ -26,7 +26,7 @@ const floatScreens = {
         showCharacterStatus();
       break;
       case "items":
-        openCharacterInventory();
+        openCharacterInventory(openItemOptionsMenu);
       break;
       case "comprar":
         const storeList = this.current.storeList;
@@ -196,6 +196,24 @@ function showCharacterStatus() {
   status[2] = `DFS : ${player.defense} + 9999`;
   status[3] = `AGL : ${player.agility} + 9999`;
   statusScreen.setOptions(false,status);
+}
+
+function realizeItemOption() {
+  const action = this.optionValue;
+  const itemName = getItemName("remove x",this.itemName);
+  switch(action) {
+    case "olhar":
+      showItemDescription(itemName);
+    break;
+  }
+}
+
+function openItemOptionsMenu() {
+  if(this.optionValue) {
+    const itemOptionMenu = floatScreens.open("item-options");
+    itemOptionMenu.itemName = this.optionValue;
+    itemOptionMenu.optionCallback = realizeItemOption;
+  }
 }
 
 //Funções responsáveis pela controle da caixa de diálogo

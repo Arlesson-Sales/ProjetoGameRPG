@@ -23,6 +23,14 @@ function createItem(itemData) {
   return item;
 }
 
+function showItemDescription(itemName) {
+  const item = itemsManager.find(itemName);
+  if(item) {
+    let message = `${item.name}`;
+    openDialogBox(message);
+  }
+}
+
 //funcoes de compra e venda de items
 function getItemName(actionType,itemCatalogue) {
   let indexFinal = 0;
