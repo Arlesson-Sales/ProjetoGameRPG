@@ -8,6 +8,11 @@ class Character extends Sprite {
     this.gold = 10;
     this.inventory = [];
 
+    this.health = 99999;
+    this.attack = 99999;
+    this.defense = 99999;
+    this.agility = 99999;
+
     this.target = null;
     this.speed = speed;
     this.move_top = false;

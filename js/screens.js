@@ -22,6 +22,9 @@ const floatScreens = {
   goToNext() {
     const valueName = this.current.optionValue;
     switch(valueName) {
+      case "status":
+        showCharacterStatus();
+      break;
       case "items":
         openCharacterInventory();
       break;
@@ -181,6 +184,18 @@ function openCharacterInventory(optionCallback) {
   const itemsScreen = floatScreens.open("items");
   itemsScreen.optionCallback = optionCallback;
   itemsScreen.setOptions(true,itemNames); 
+}
+
+function showCharacterStatus() {
+  const statusScreen = floatScreens.open("status");
+  const player = gameSettings.currentControl;
+  const status = [];
+
+  status[0] = `PV  : ${player.health} + 9999`;
+  status[1] = `ATK : ${player.attack} + 9999`;
+  status[2] = `DFS : ${player.defense} + 9999`;
+  status[3] = `AGL : ${player.agility} + 9999`;
+  statusScreen.setOptions(false,status);
 }
 
 //Funções responsáveis pela controle da caixa de diálogo
