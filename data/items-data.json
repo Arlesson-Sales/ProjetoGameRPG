@@ -6,21 +6,23 @@
       "price": 10,
       "description":"Uma espada comum e facil de se manusear, normalmente usada por fazendeiros para defender suas planatacoes do ataque de goblins",
       "attackBonus": 10,
+      "magicBonus": 0,
       "defenseBonus": 0,
       "healthBonus": 0,
-      "ManaBonus": 0,
-      "speedBonus": 0
+      "manaBonus": 0,
+      "agilityBonus": 0
     },
     {
       "name":"Clava",
       "category":"macer",
       "price": 5,
-      "description":"Uma clava feita de madeira comum, não muito pesada mas otima para esmagar a cabeça de alguém",
+      "description":"Uma clava feita de madeira comum, nao muito pesada mas otima para esmagar a cabeca de alguem",
       "attackBonus": 5,
+      "magicBonus": 0,
       "defenseBonus": 0,
       "healthBonus": 0,
       "ManaBonus": 0,
-      "speedBonus": 0
+      "agilityBonus": 0
     }
   ]
 }

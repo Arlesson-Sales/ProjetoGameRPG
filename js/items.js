@@ -14,19 +14,39 @@ async function loadItemsData() {
 function createItem(itemData) {
   const {
     name, category, price, description,
-    attackBonus, defenseBonus, healthBonus, manaBonus, speedBonus,
+    attackBonus, magicBonus, defenseBonus, healthBonus, manaBonus, agilityBonus,
   } = itemData;
     
   const item = new Item(name,category,price);
-  item.setBonus(attackBonus,defenseBonus,healthBonus,manaBonus,speedBonus);
+  item.setBonus(attackBonus,defenseBonus,healthBonus,manaBonus,magicBonus,agilityBonus);
   item.setDescription(description);
   return item;
+}
+
+function getAttributeName(name) {
+  switch(name) {
+    case "attackBonus": return "ATK";
+    case "defenseBonus": return "DFS";
+    case "healthBonus": return "PV";
+    case "manaBonus": return "MP";
+    case "magicBonus": return "MGC";
+    case "agilityBonus": return "AGL";
+  }
 }
 
 function showItemDescription(itemName) {
   const item = itemsManager.find(itemName);
   if(item) {
-    let message = `${item.name}`;
+    let message = item.name;
+    let { attackBonus, magicBonus, defenseBonus, healthBonus, manaBonus, agilityBonus } = item;
+    let itemBonus = { attackBonus, magicBonus, defenseBonus, healthBonus, manaBonus, agilityBonus };
+    
+    for(let value in itemBonus) {
+      if(itemBonus[value] > 0) {
+        message = `${message} ${getAttributeName(value)}: +${itemBonus[value]}/`;
+      }
+    }
+    message = `${message} ${item.description}`;
     openDialogBox(message);
   }
 }

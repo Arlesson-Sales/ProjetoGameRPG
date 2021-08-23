@@ -12,6 +12,8 @@ class Character extends Sprite {
     this.attack = 99999;
     this.defense = 99999;
     this.agility = 99999;
+    this.mana = 99999;
+    this.magic = 99999;
 
     this.target = null;
     this.speed = speed;
@@ -63,18 +65,20 @@ class Item {
     this.category = category; //helmet, armor, gloves, boots, ring
     this.description = "";
     this.attackBonus = 0;
+    this.magicBonus = 0;
     this.defenseBonus = 0;
     this.healthBonus = 0;
     this.ManaBonus = 0;
-    this.speedBonus = 0;
+    this.agilityBonus = 0;
   }
   
-  setBonus(attack,defense,health,mana,speed) {
+  setBonus(attack,defense,health,mana,magic,agility) {
     this.attackBonus = attack;
     this.defenseBonus = defense;
     this.healthBonus = health ?? 0;
     this.ManaBonus = mana ?? 0;
-    this.speedBonus = speed ?? 0;
+    this.magicBonus = magic ?? 0;
+    this.agilityBonus = agility ?? 0;
   }
   
   setDescription(text) {

@@ -192,9 +192,11 @@ function showCharacterStatus() {
   const status = [];
 
   status[0] = `PV  : ${player.health} + 9999`;
-  status[1] = `ATK : ${player.attack} + 9999`;
-  status[2] = `DFS : ${player.defense} + 9999`;
-  status[3] = `AGL : ${player.agility} + 9999`;
+  status[1] = `MP  : ${player.mana} + 9999`;
+  status[2] = `ATK : ${player.attack} + 9999`;
+  status[3] = `DFS : ${player.defense} + 9999`;
+  status[4] = `MGC : ${player.magic} + 9999`;
+  status[5] = `AGL : ${player.agility} + 9999`;
   statusScreen.setOptions(false,status);
 }
 
@@ -204,6 +206,9 @@ function realizeItemOption() {
   switch(action) {
     case "olhar":
       showItemDescription(itemName);
+    break;
+    case "descartar":
+      
     break;
   }
 }
@@ -228,7 +233,7 @@ function getDialogLines(text,letterLimit) {
 }
 
 function calculateDialogBoxPositions(dialogBox,text) {
-  let letterLimit = 36;
+  let letterLimit = 37;
   if(window.innerWidth >= 700) {
     dialogBox.y = 250;
     dialogBox.width = 345;
