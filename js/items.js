@@ -51,6 +51,19 @@ function showItemDescription(itemName) {
   }
 }
 
+function discardItem(itemName) {
+  const player = gameSettings.currentControl;
+  let index = 0;
+  player.inventory.forEach((item,id) => {
+    if(item.name === itemName) {
+      index = id;
+    }
+  });
+  
+  player.inventory.splice(index,1);
+  openDialogBox("voce descartou um item",() => floatScreens.closeAll());
+}
+
 //funcoes de compra e venda de items
 function getItemName(actionType,itemCatalogue) {
   let indexFinal = 0;

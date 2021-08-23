@@ -195,8 +195,8 @@ function showCharacterStatus() {
   status[1] = `MP  : ${player.mana} + 9999`;
   status[2] = `ATK : ${player.attack} + 9999`;
   status[3] = `DFS : ${player.defense} + 9999`;
-  status[4] = `MGC : ${player.magic} + 9999`;
-  status[5] = `AGL : ${player.agility} + 9999`;
+  status[4] = `AGL : ${player.agility} + 9999`;
+  status[5] = `MGC : ${player.magic} + 9999`;
   statusScreen.setOptions(false,status);
 }
 
@@ -208,7 +208,7 @@ function realizeItemOption() {
       showItemDescription(itemName);
     break;
     case "descartar":
-      
+      discardItem(itemName);
     break;
   }
 }
