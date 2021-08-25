@@ -93,9 +93,9 @@ async function loadNpcsData() {
 function createGameNpcs(data) {
   data.npcs.forEach(npcData => {
     const {
-      id,
       type,
       name,
+      behavior,
       message,
       storeList,
       imageName,
@@ -107,11 +107,16 @@ function createGameNpcs(data) {
     
     npc.setAnimation(2,16,true);
     npc.message = message;
-    npc.id = id;
     npc.type = type;
     npc.name = name;
+    npc.behavior = behavior;
     npc.storeList = storeList;
     npc.events.action = npcInteraction;
+
+    if(type !== "merchant") {
+      npc.events.update = npcMovements;
+      npc.events.collide = npc.clearMovements;
+    }
     scene.addSprite(layer,npc,true);
   });
 }
@@ -291,7 +296,7 @@ function npcInteraction() {
   const message = this.message;
   const storeList = this.storeList;
 
-  if(this.id === "merchant") {
+  if(this.type === "merchant") {
     openDialogBox(message,() => {
       openGoldScreen(3,60);
       const tradeSelector = floatScreens.open("trade-selector");
@@ -328,6 +333,34 @@ function interactAction() {
   }
 }
 
+function npcMovements() {
+  const player = gameSettings.currentControl;
+  if(this.behavior === "hostile" && this.inside(player,80)) {
+    this.movementCount = 0;
+    
+    if((player.y + player.height) < this.y) {
+      this.y -= this.speed;
+      this.sourceY = 48;
+    }
+    if(player.y > (this.y + this.height)) {
+      this.y += this.speed;
+      this.sourceY = 0;
+    }
+    if((player.x + player.width) < this.x) {
+      this.x -= this.speed;
+      this.sourceY = 32;
+    }
+    if(player.x > (this.x + this.width)) {
+      this.x += this.speed;
+      this.sourceY = 16;
+    }
+
+  } else {
+    this.randomMovement();
+    this.move();
+  }
+}
+
 function main() {
   //Definindo camera
   this.camera = new Camera(0,0,16,16);
@@ -344,9 +377,15 @@ function main() {
   player.events.collide = function(collider) {
     this.target = collider;
   }
-  
+
+  const monster = new Character("npc-5",96,208,16,16,1);
+  monster.behavior = "hostile";
+  monster.setAnimation(2,16,true);
+  monster.events.update = npcMovements;
+
   const city = this.getScene("city-1");
   city.addSprite(3,player);
+  city.addSprite(3,monster,true);
 
   //configuração final
   this.camera.target = player;

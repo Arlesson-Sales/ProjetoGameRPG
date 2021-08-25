@@ -1,22 +1,22 @@
 {
   "npcs": [
     {
-      "id": "village",
+      "type": "village",
+      "behavior": "passive",
       "name":"Temanus",
       "imageName": "npc-4",
       "sceneName": "city-1",
-      "type": "passive",
       "message": "seja bem vindo a nossa humilde vila",
       "x": 139,
       "y": 116,
       "layer": 3
     },
     {
-      "id": "merchant",
+      "type": "merchant",
+      "behavior": "passive",
       "name":"Tianus",
       "imageName": "npc-2",
       "sceneName": "city-1",
-      "type": "passive",
       "message": "ola sou um marcador, o que vai querer?",
       "storeList": ["Espada de madeira","Clava"],
       "x": 192,

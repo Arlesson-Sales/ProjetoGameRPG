@@ -2,10 +2,10 @@ class Character extends Sprite {
   constructor(imageName,x,y,width,height,speed) {
     let image = game.images.find(currentImage => currentImage.id === imageName);
     super(image,x,y,width,height);
-    this.id = "";
-    this.type = "";
-    this.name = "";
-    this.gold = 10;
+    this.behavior = "none";
+    this.type = "none";
+    this.name = "none";
+    this.gold = 99999999;
     this.inventory = [];
 
     this.health = 99999;
@@ -22,6 +22,9 @@ class Character extends Sprite {
     this.move_right = false;
     this.move_bottom = false;
     this.text = "";
+
+    this.movementCount = 0;
+    this.movementInterval = 50;
   }
   
   move() {
@@ -55,6 +58,27 @@ class Character extends Sprite {
       return true;
     }
     return false;
+  }
+
+  clearMovements() {
+    this.move_top = false;
+    this.move_left = false;
+    this.move_right = false;
+    this.move_bottom = false;
+  }
+
+  randomMovement() {
+    this.movementCount++;
+    if(this.movementCount === (this.movementInterval / 2)) {
+      this.clearMovements();
+    }
+
+    if(this.movementCount === this.movementInterval) {
+      const moves = ["top","left","right","bottom"];
+      let moveName = moves[Math.floor(Math.random() * moves.length)];
+      this.movementCount = 0;
+      this.touchControl(moveName);
+    }
   }
 }
 

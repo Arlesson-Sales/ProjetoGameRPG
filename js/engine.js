@@ -129,17 +129,19 @@ class GameJS {
       }
       
       for(let sprite of sprites) {
-        const events = sprite.events;
-        events.update?.call(sprite);
-        
-        if(sprite.collider) {
-          for(let currentCollider of cameraInvaders) {
-            let insideZone = sprite.inside(currentCollider);
-            
-            if(insideZone && (currentCollider !== sprite)) {
-              if(this.collision(sprite,currentCollider)) {
-                events.collide?.call(sprite,currentCollider);
-                currentCollider.events.collide?.call(currentCollider,sprite);
+        if(camera.inside(sprite)) {
+          const events = sprite.events;
+          events.update?.call(sprite);
+          
+          if(sprite.collider) {
+            for(let currentCollider of cameraInvaders) {
+              let insideZone = sprite.inside(currentCollider);
+              
+              if(insideZone && (currentCollider !== sprite)) {
+                if(this.collision(sprite,currentCollider)) {
+                  events.collide?.call(sprite,currentCollider);
+                  currentCollider.events.collide?.call(currentCollider,sprite);
+                }
               }
             }
           }
@@ -383,7 +385,7 @@ class Sprite {
     this.visible = state ?? !this.visible;
   }
   
-  setAnimation(frames,speed,animated) {
+  setAnimation(frames,speed,animated = true) {
     this.animationSource = this.sourceX;
     this.animationFrames = frames;
     this.animationSpeed = speed;
